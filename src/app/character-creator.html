@@ -1,0 +1,63 @@
+<mat-card class="creator-card">
+
+  <mat-card-content class ="menu-description">
+    {{ menuDescription }}
+  </mat-card-content>  
+
+  <mat-card-content>
+    <div class="selector-row">
+      <button mat-icon-button aria-label="Prev face model" (click)="prevFaceModel()">
+        &lt;
+      </button>
+      <div class="selector-label">Face Model ({{ headModelIdx() + 1 }}/{{ headModels.length }})</div>
+      <button mat-icon-button aria-label="Next face model" (click)="nextFaceModel()">
+        &gt;
+      </button>
+    </div>
+
+    <div class="selector-row">
+      <button mat-icon-button aria-label="Prev face texture" (click)="prevFaceTexture()">
+        &lt;
+      </button>
+      <div class="selector-label">Face Texture ({{ headTextureIdx() + 1 }}/{{ headTextureMaxValue }})</div>
+      <button mat-icon-button aria-label="Next face texture" (click)="nextFaceTexture()">
+        &gt;
+      </button>
+    </div>
+
+    <div class="selector-row">
+      <button mat-icon-button aria-label="Prev body model" (click)="prevBodyModel()">
+        &lt;
+      </button>
+      <div class="selector-label">Body Model ({{ bodyModelIdx() + 1 }}/{{ bodyModels.length }})</div>
+      <button mat-icon-button aria-label="Next body model" (click)="nextBodyModel()">
+        &gt;
+      </button>
+    </div>
+
+    <div class="selector-row">
+      <button mat-icon-button aria-label="Prev body texture" (click)="prevBodyTexture()">
+        &lt;
+      </button>
+      <div class="selector-label">Body Texture ({{ bodyTextureIdx() + 1 }}/{{ bodyTextureMaxValue }})</div>
+      <button mat-icon-button aria-label="Next body texture" (click)="nextBodyTexture()">
+        &gt;
+      </button>
+    </div>
+
+    <div class="selector-row">
+      <button mat-icon-button aria-label="Prev body texture" (click)="prevGameStart()">
+        &lt;
+      </button>
+      <div class="selector-label">Game Start: {{ gameStartName[gameStartIdx()] }}</div>
+      <button mat-icon-button aria-label="Next body texture" (click)="nextGameStart()">
+        &gt;
+      </button>
+    </div>
+
+  </mat-card-content>
+  <mat-card-content>
+    {{ gameStartDescription[gameStartIdx()] }}
+  </mat-card-content>  
+</mat-card>
+

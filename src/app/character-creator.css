@@ -1,0 +1,28 @@
+
+/* Use grid for each selector row: prev button | label | value | next button */
+.selector-row {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr 1fr;
+	gap: 1rem;
+	align-items: center;
+	padding: 0.5rem 0;
+}
+
+/* Ensure the rule wins over any library defaults; Material's buttons and card styles may
+   set flex on some elements inside — the row itself should remain a grid. */
+.creator-card .selector-row { display: grid !important; background: transparent;}
+
+.selector-label { /* now a grid cell */
+	font-weight: 600;
+}
+
+.gameStartDescription-card {
+    margin: 1rem;
+	width: 100%;
+}
+
+/* Optional: ensure title/text contrast if you later switch to a dark host background */
+.creator-card .mat-mdc-card-title,
+.creator-card .mat-mdc-card-subtitle {
+	color: inherit;
+}
