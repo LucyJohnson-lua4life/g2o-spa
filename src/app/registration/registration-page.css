@@ -1,0 +1,28 @@
+
+/* Two-column layout: left for player render, right for character creator */
+
+/* Grid-based two-column layout: left for player render, right for character creator */
+.registration-container {
+	display: grid;
+	/* left column grows, right column keeps a sensible min and caps with a fraction */
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: 1fr, 1fr, auto;
+	gap: 1rem; /* responsive gap in rem */
+	padding: 1rem;
+}
+
+.left-pane {
+	grid-column: 1;
+}
+
+.character-creator {
+	grid-column: 4 / 6;
+	grid-row: 2;
+	margin-top: 30%;
+}
+
+.user-registration {
+  grid-column: 4 / 6;
+  grid-row: 3;
+}
+
