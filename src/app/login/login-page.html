@@ -1,0 +1,23 @@
+<div class="login-container">
+  <div class="login-heading">Khorinis Secrets (Alpha)</div>
+  <mat-card class="login-card">
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="login()" autocomplete="off">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>User Name</mat-label>
+          <input matInput [value]="username()" (input)="onUsernameInput($event)" name="username" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput [value]="password()" (input)="onPasswordInput($event)" name="password" type="password" required />
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit">Login</button>
+          <span class="or-label">OR</span>
+          <button mat-stroked-button color="accent" type="button" (click)="register()">Register</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
