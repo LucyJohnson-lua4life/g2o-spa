@@ -25,7 +25,7 @@ export class RegistrationInput {
 
   sendToSquirrel() {    
     const jsonData = {};
-    squirrel.call("messagePassTest", JSON.stringify(jsonData));
+    squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
   }
 
 }

@@ -44,7 +44,7 @@ export class CharacterCreator {
 
   sendToSquirrel() {
     const jsonData = { headModel: this.headModels[this.headModelIdx()], bodyModel: this.bodyModels[this.bodyModelIdx()], headTexture: this.headTextureIdx(), bodyTexture: this.bodyTextureIdx(), messageContext: "setVisual" };
-    squirrel.call("messagePassTest", JSON.stringify(jsonData));
+    squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
   }
 
   prevFaceModel() {

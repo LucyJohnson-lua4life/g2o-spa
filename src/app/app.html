@@ -1,5 +1,12 @@
 <main class="main">
-  <login-page></login-page>
+  @switch (context()) {
+  @case (GameContext.LOGIN) {
+    <login-page />
+  }
+  @case (GameContext.REGISTRATION) {
+    <registration-page />
+  }
+}
 </main>
 
 <router-outlet />

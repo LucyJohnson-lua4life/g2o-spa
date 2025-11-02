@@ -5,33 +5,35 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AppStateService } from '../app-state-service';
 
 @Component({
-  selector: 'login-page',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
-  templateUrl: './login-page.html',
-  styleUrls: ['./login-page.css']
+    selector: 'login-page',
+    standalone: true,
+    imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+    templateUrl: './login-page.html',
+    styleUrls: ['./login-page.css']
 })
 export class LoginPage {
-  username = signal('');
-  password = signal('');
+    username = signal('');
+    password = signal('');
 
-  onUsernameInput(event: Event) {
-    this.username.set((event.target as HTMLInputElement).value);
-  }
+    constructor(private appState: AppStateService) { }
 
-  onPasswordInput(event: Event) {
-    this.password.set((event.target as HTMLInputElement).value);
-  }
+    onUsernameInput(event: Event) {
+        this.username.set((event.target as HTMLInputElement).value);
+    }
 
-  login() {
-    // TODO: Implement login logic
-    alert(`Login with user: ${this.username()} password: ${this.password()}`);
-  }
+    onPasswordInput(event: Event) {
+        this.password.set((event.target as HTMLInputElement).value);
+    }
 
-  register() {
-    // TODO: Implement navigation to registration page
-    alert('Navigate to registration page');
-  }
+    login() {
+        // TODO: Implement login logic
+        alert(`Login with user: ${this.username()} password: ${this.password()}`);
+    }
+
+    register() {
+        this.appState.setContext(1); 
+    }
 }

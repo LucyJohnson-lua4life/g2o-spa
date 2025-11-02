@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, computed, Signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RegistrationPage } from "./registration/registration-page";
 import { LoginPage } from './login/login-page';
+import { AppStateService, GameContext } from './app-state-service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,22 @@ import { LoginPage } from './login/login-page';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('g2o-spa');
+export class App implements OnInit {
+  GameContext = GameContext;
+  // reference to the signal directly
+  context!: Signal<GameContext>;
+
+  constructor(private appState: AppStateService) {}
+
+  ngOnInit() {
+    this.context = this.appState.context;
+    /*
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'gameContextChange') {
+        const newCtx = event.data.context as GameContext;
+        this.appState.setContext(newCtx);
+      }
+    });
+    */
+  }
 }

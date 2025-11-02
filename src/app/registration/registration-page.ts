@@ -9,5 +9,4 @@ import { RegistrationInput } from "./registration-input.component";
   styleUrl: './registration-page.css'
 })
 export class RegistrationPage {
-  protected readonly title = signal('g2o-spa');
 }
