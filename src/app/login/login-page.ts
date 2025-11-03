@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +18,9 @@ export class LoginPage {
     username = signal('');
     password = signal('');
 
-    constructor(private appState: AppStateService) { }
+    constructor(private appState: AppStateService, private ngZone: NgZone) {
+        (window as any).runLoginFailed = this.runLoginFailed.bind(this);
+    }
 
     onUsernameInput(event: Event) {
         this.username.set((event.target as HTMLInputElement).value);
@@ -34,6 +36,17 @@ export class LoginPage {
     }
 
     register() {
-        this.appState.setContext(1); 
+        this.appState.setContext(1);
+    }
+    runLoginFailed() {
+        this.ngZone.run(() => {
+            alert(`Login failed so far!`);
+
+        });
+    }
+    runLoginSuccess() {
+        this.ngZone.run(() => {
+            alert(`Login success!`);
+        });
     }
 }
