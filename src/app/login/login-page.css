@@ -53,3 +53,9 @@ html, body, .login-container {
   display: flex;
   justify-content: center;
 }
+
+.error-message {
+  color: #f44336;
+  margin-top: 1rem;
+  text-align: center;
+}
