@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AppStateService } from '../app-state-service';
+import { sha256 as sha256Sync } from 'js-sha256';
+declare const squirrel: any;
 
 @Component({
     selector: 'login-page',
@@ -22,6 +24,15 @@ export class LoginPage {
         (window as any).runLoginFailed = this.runLoginFailed.bind(this);
     }
 
+    async sha256(message: string): Promise<string> {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+    }
+
+
     onUsernameInput(event: Event) {
         this.username.set((event.target as HTMLInputElement).value);
     }
@@ -31,8 +42,12 @@ export class LoginPage {
     }
 
     login() {
-        // TODO: Implement login logic
-        alert(`Login with user: ${this.username()} password: ${this.password()}`);
+        const jsonData = {
+            username: this.username(),
+            passwordSha: sha256Sync(this.password()), 
+            messageContext: "attemptLogin"
+        };
+        squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
     }
 
     register() {
@@ -40,13 +55,14 @@ export class LoginPage {
     }
     runLoginFailed() {
         this.ngZone.run(() => {
-            alert(`Login failed so far!`);
 
+            squirrel.call("cefLog", "LoginFailed");
         });
     }
     runLoginSuccess() {
         this.ngZone.run(() => {
-            alert(`Login success!`);
+
+            squirrel.call("cefLog", "LoginSuccess");
         });
     }
 }

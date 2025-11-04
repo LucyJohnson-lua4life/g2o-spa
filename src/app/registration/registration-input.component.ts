@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AppStateService } from '../app-state-service';
 
 declare const squirrel: any;
 
@@ -16,16 +17,20 @@ declare const squirrel: any;
   styleUrls: ['./registration-input.css']
 })
 export class RegistrationInput {
-  
+
   // indexes for current selection as signals
-  userName = signal("");  
+  userName = signal("");
   userPassword = signal("");
   // helpers
 
+  constructor(private appState: AppStateService) {}
 
-  sendToSquirrel() {    
+  sendToSquirrel() {
     const jsonData = {};
     squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
   }
 
+  backToLogin() {
+    this.appState.setContext(0);    
+  }
 }
