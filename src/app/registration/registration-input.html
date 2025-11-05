@@ -2,12 +2,22 @@
     <mat-card-content>
         <div class="registration-row">
             <mat-form-field>
-                <input matInput placeholder="User Name">
+                <input matInput placeholder="User Name" 
+                            matInput
+            [value]="userName()"
+            (input)="onUsernameInput($event)"
+            name="username"
+            required>
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Password" type="password" required>
+                <input matInput placeholder="Password" type="password" required 
+                            matInput
+            [value]="userPassword()"
+            (input)="onPasswordInput($event)"
+            name="password"
+            type="password">
             </mat-form-field>
-            <button matButton="outlined" color="primary">Register</button>
+            <button matButton="outlined" color="primary" (click)="attemptRegistration()">Register</button>
             <button matButton="outlined" color="primary" type="button" (click)="backToLogin()">Back To Login</button>
         </div>
     </mat-card-content>

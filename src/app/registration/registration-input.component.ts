@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AppStateService } from '../app-state-service';
+import { RegistrationStateService } from './registration-state-service';
+import { sha256 } from '@noble/hashes/sha2.js';
+import { utf8ToBytes, bytesToHex } from '@noble/hashes/utils.js';
 
 declare const squirrel: any;
 
@@ -23,14 +26,39 @@ export class RegistrationInput {
   userPassword = signal("");
   // helpers
 
-  constructor(private appState: AppStateService) {}
+  registrationFailed = signal(false);
+  constructor(private appState: AppStateService, private ngZone: NgZone, private registrationStateService: RegistrationStateService) { }
 
-  sendToSquirrel() {
-    const jsonData = {};
+  attemptRegistration() {
+    const jsonData: any = this.registrationStateService.getState();
+    jsonData.username = this.userName();
+    jsonData.passwordSha = bytesToHex(sha256(utf8ToBytes(this.userPassword())));
+    jsonData.messageContext = "attemptRegistration";
     squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
   }
 
   backToLogin() {
-    this.appState.setContext(0);    
+    this.appState.setContext(0);
+  }
+
+  onUsernameInput(event: Event) {
+    this.userName.set((event.target as HTMLInputElement).value);
+  }
+
+  onPasswordInput(event: Event) {
+    this.userPassword.set((event.target as HTMLInputElement).value);
+  }
+
+  runRegistrationUserExists() {
+    this.ngZone.run(() => {
+
+      this.registrationFailed.set(true);
+      squirrel.call("cefLog", "cefLog: RegistrationUserExists");
+    });
+  }
+  runRegistrationSuccess() {
+    this.ngZone.run(() => {
+      squirrel.call("cefLog", "RegistrationSuccess");
+    });
   }
 }
