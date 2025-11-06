@@ -62,6 +62,7 @@ export class LoginPage {
         this.ngZone.run(() => {
 
             squirrel.call("cefLog", "LoginSuccess");
+            this.appState.setContext(2);
         });
     }
 }

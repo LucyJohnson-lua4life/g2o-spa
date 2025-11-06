@@ -27,7 +27,10 @@ export class RegistrationInput {
   // helpers
 
   registrationFailed = signal(false);
-  constructor(private appState: AppStateService, private ngZone: NgZone, private registrationStateService: RegistrationStateService) { }
+  constructor(private appState: AppStateService, private ngZone: NgZone, private registrationStateService: RegistrationStateService) {
+    (window as any).runRegistrationUserExists = this.runRegistrationUserExists.bind(this);
+    (window as any).runRegistrationSuccess = this.runRegistrationSuccess.bind(this);
+  }
 
   attemptRegistration() {
     const jsonData: any = this.registrationStateService.getState();
@@ -59,6 +62,7 @@ export class RegistrationInput {
   runRegistrationSuccess() {
     this.ngZone.run(() => {
       squirrel.call("cefLog", "RegistrationSuccess");
+      this.appState.setContext(2);
     });
   }
 }

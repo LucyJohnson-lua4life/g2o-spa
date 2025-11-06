@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { RegistrationPage } from "./registration/registration-page";
 import { LoginPage } from './login/login-page';
 import { AppStateService, GameContext } from './app-state-service';
+import { IngamePage } from "./ingame/ingame-page";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RegistrationPage, LoginPage],
+  imports: [RouterOutlet, RegistrationPage, LoginPage, IngamePage],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

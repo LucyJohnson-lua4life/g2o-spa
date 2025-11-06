@@ -2,7 +2,8 @@ import { Injectable, signal } from '@angular/core';
 
 export enum GameContext {
   LOGIN = 0,
-  REGISTRATION = 1
+  REGISTRATION = 1,
+  INGAME = 2
 }
 
 @Injectable({ providedIn: 'root' })
