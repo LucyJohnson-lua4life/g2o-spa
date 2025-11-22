@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppStateService } from '../app-state-service';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { utf8ToBytes, bytesToHex } from '@noble/hashes/utils.js';
+import { Router } from '@angular/router';
 declare const squirrel: any;
 
 @Component({
@@ -23,7 +24,7 @@ export class LoginPage {
     password = '';
     loginHasFailed = false;
 
-    constructor(private appState: AppStateService, private ngZone: NgZone, private cd: ChangeDetectorRef) {
+    constructor(private appState: AppStateService, private ngZone: NgZone, private cd: ChangeDetectorRef, private router: Router) {
         (window as any).runLoginFailed = this.runLoginFailed.bind(this);
         (window as any).runLoginSuccess = this.runLoginSuccess.bind(this);
     }
@@ -44,7 +45,8 @@ export class LoginPage {
     }
 
     register() {
-        this.appState.setContext(1);
+        //this.appState.setContext(1);
+        this.router.navigate(['/registration']);
     }
     runLoginFailed() {
         this.ngZone.run(() => {
@@ -58,8 +60,8 @@ export class LoginPage {
     runLoginSuccess() {
         this.ngZone.run(() => {
 
-            squirrel.call("cefLog", "LoginSuccess");
-            this.appState.setContext(2);
+            squirrel.call("cefLog", "LoginSuccess");            
+            this.router.navigate(['/ingame']);
         });
     }
 }

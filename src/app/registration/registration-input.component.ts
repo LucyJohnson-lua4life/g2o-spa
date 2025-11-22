@@ -10,6 +10,8 @@ import { AppStateService } from '../app-state-service';
 import { RegistrationStateService } from './registration-state-service';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { utf8ToBytes, bytesToHex } from '@noble/hashes/utils.js';
+import { Router } from '@angular/router';
+
 
 declare const squirrel: any;
 
@@ -31,7 +33,8 @@ export class RegistrationInput {
     private appState: AppStateService,
     private ngZone: NgZone,
     private registrationStateService: RegistrationStateService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) {
     (window as any).runRegistrationUserExists = this.runRegistrationUserExists.bind(this);
     (window as any).runRegistrationSuccess = this.runRegistrationSuccess.bind(this);
@@ -45,8 +48,8 @@ export class RegistrationInput {
     squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
   }
 
-  backToLogin() {
-    this.appState.setContext(0);
+  backToLogin() {    
+    this.router.navigate(['/login']);
   }
 
   onUsernameInput(event: Event) {
@@ -69,7 +72,7 @@ export class RegistrationInput {
   runRegistrationSuccess() {
     this.ngZone.run(() => {
       squirrel.call("cefLog", "RegistrationSuccess");
-      this.appState.setContext(2);
+      this.router.navigate(['/ingame']);
     });
   }
 }
