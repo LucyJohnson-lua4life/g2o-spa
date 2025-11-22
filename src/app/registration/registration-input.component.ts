@@ -1,5 +1,6 @@
-import { Component, signal, computed, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -15,27 +16,31 @@ declare const squirrel: any;
 @Component({
   selector: 'registration-input',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatCardModule, MatFormFieldModule, MatInputModule],
   templateUrl: './registration-input.html',
   styleUrls: ['./registration-input.css']
 })
 export class RegistrationInput {
 
-  // indexes for current selection as signals
-  userName = signal("");
-  userPassword = signal("");
+  // template-driven form properties
+  userName = "";
+  userPassword = "";
   // helpers
-
-  registrationFailed = signal(false);
-  constructor(private appState: AppStateService, private ngZone: NgZone, private registrationStateService: RegistrationStateService) {
+  registrationFailed = false;
+  constructor(
+    private appState: AppStateService,
+    private ngZone: NgZone,
+    private registrationStateService: RegistrationStateService,
+    private cd: ChangeDetectorRef
+  ) {
     (window as any).runRegistrationUserExists = this.runRegistrationUserExists.bind(this);
     (window as any).runRegistrationSuccess = this.runRegistrationSuccess.bind(this);
   }
 
   attemptRegistration() {
     const jsonData: any = this.registrationStateService.getState();
-    jsonData.username = this.userName();
-    jsonData.passwordSha = bytesToHex(sha256(utf8ToBytes(this.userPassword())));
+    jsonData.username = this.userName;
+    jsonData.passwordSha = bytesToHex(sha256(utf8ToBytes(this.userPassword)));
     jsonData.messageContext = "attemptRegistration";
     squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
   }
@@ -45,17 +50,19 @@ export class RegistrationInput {
   }
 
   onUsernameInput(event: Event) {
-    this.userName.set((event.target as HTMLInputElement).value);
+    this.userName = (event.target as HTMLInputElement).value;
   }
 
   onPasswordInput(event: Event) {
-    this.userPassword.set((event.target as HTMLInputElement).value);
+    this.userPassword = (event.target as HTMLInputElement).value;
   }
 
   runRegistrationUserExists() {
     this.ngZone.run(() => {
 
-      this.registrationFailed.set(true);
+      this.registrationFailed = true;
+      // ensure change detection runs (handles OnPush parents or other edge-cases)
+      this.cd.markForCheck();
       squirrel.call("cefLog", "cefLog: RegistrationUserExists");
     });
   }

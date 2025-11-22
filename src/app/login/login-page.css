@@ -1,4 +1,6 @@
-html, body, .login-container {
+html,
+body,
+.login-container {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -28,11 +30,13 @@ html, body, .login-container {
 .full-width {
   width: 100%;
 }
+
 .button-row {
   display: flex;
   justify-content: space-between;
   margin-top: 1.5rem;
 }
+
 .or-label {
   align-self: center;
   margin: 0 1rem;
@@ -49,7 +53,7 @@ html, body, .login-container {
   margin-bottom: 2rem;
   letter-spacing: 0.05em;
   color: #3e2723;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   display: flex;
   justify-content: center;
 }
@@ -58,4 +62,8 @@ html, body, .login-container {
   color: #f44336;
   margin-top: 1rem;
   text-align: center;
+}
+
+.mat-mdc-card-title, .mat-mdc-card-subtitle {
+  margin: 10px;
 }

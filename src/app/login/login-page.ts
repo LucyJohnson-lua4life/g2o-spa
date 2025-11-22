@@ -1,4 +1,4 @@
-import { Component, signal, NgZone } from '@angular/core';
+import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -18,31 +18,26 @@ declare const squirrel: any;
     styleUrls: ['./login-page.css']
 })
 export class LoginPage {
-    username = signal('');
-    password = signal('');
-    loginHasFailed = signal(false);
+    // switched to template-driven forms (ngModel)
+    username = '';
+    password = '';
+    loginHasFailed = false;
 
-    constructor(private appState: AppStateService, private ngZone: NgZone) {
+    constructor(private appState: AppStateService, private ngZone: NgZone, private cd: ChangeDetectorRef) {
         (window as any).runLoginFailed = this.runLoginFailed.bind(this);
         (window as any).runLoginSuccess = this.runLoginSuccess.bind(this);
     }
 
     loginFailed() {
-        return this.loginHasFailed();
+        return this.loginHasFailed;
     }
 
-    onUsernameInput(event: Event) {
-        this.username.set((event.target as HTMLInputElement).value);
-    }
-
-    onPasswordInput(event: Event) {
-        this.password.set((event.target as HTMLInputElement).value);
-    }
+    // ngModel two-way binding will update `username` and `password` directly
 
     login() {
         const jsonData = {
-            username: this.username(),
-            passwordSha: bytesToHex(sha256(utf8ToBytes(this.password()))), 
+            username: this.username,
+            passwordSha: bytesToHex(sha256(utf8ToBytes(this.password))), 
             messageContext: "attemptLogin"
         };
         squirrel.call("sendToServerHandler", JSON.stringify(jsonData));
@@ -54,7 +49,9 @@ export class LoginPage {
     runLoginFailed() {
         this.ngZone.run(() => {
 
-            this.loginHasFailed.set(true);
+            this.loginHasFailed = true;
+            // ensure change detection runs for OnPush or other edge cases
+            this.cd.markForCheck();
             squirrel.call("cefLog", "LoginFailed");
         });
     }

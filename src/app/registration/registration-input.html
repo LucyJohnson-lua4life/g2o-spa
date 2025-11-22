@@ -2,17 +2,17 @@
     <mat-card-content>
         <div class="registration-row">
             <mat-form-field>
-                <input matInput placeholder="User Name" matInput [value]="userName()" (input)="onUsernameInput($event)"
-                    name="username" required>
+                <input matInput placeholder="User Name" name="username" required [(ngModel)]="userName">
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="Password" type="password" required matInput [value]="userPassword()"
-                    (input)="onPasswordInput($event)" name="password" type="password">
+                <input matInput placeholder="Password" type="password" name="password" required
+                    [(ngModel)]="userPassword">
             </mat-form-field>
 
-            <button matButton="outlined" color="primary" (click)="attemptRegistration()">Register</button>
+            <button mat-stroked-button color="primary" (click)="attemptRegistration()">Register</button>
+            <button mat-stroked-button color="primary" type="button" (click)="backToLogin()">Back To Login</button>
             <button matButton="outlined" color="primary" type="button" (click)="backToLogin()">Back To Login</button>
-            @if (registrationFailed()) {
+            @if (registrationFailed) {
             <div class="error-message">Registration failed: user already exists.</div>
             }
         </div>
