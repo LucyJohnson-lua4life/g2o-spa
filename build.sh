@@ -10,6 +10,7 @@ echo "Building Angular app..."
 ng build --base-href ./ --output-path dist/cef
 
 # 3️⃣ Patch index.html to remove type="module"
+# This step is necessary, because g2o uses the file:// protocoll to load the app, so we need to avoid everything like CORS that could block us.
 INDEX_FILE="dist/cef/browser/index.html"
 
 if [ -f "$INDEX_FILE" ]; then
