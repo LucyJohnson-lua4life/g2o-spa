@@ -1,0 +1,29 @@
+<div class="login-container">
+  <div class="login-heading">Gothic 2 Multiplayer Adventures</div>
+  <mat-card class="login-card">
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="login()" autocomplete="off">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>User Name</mat-label>
+          <input matInput name="username" required [(ngModel)]="username" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput name="password" type="password" required [(ngModel)]="password" />
+        </mat-form-field>
+
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit">Login</button>
+          <span class="or-label">OR</span>
+          <button mat-stroked-button color="accent" type="button" (click)="register()">Register</button>
+        </div>
+
+        @if (loginFailed()) {
+          <div class="error-message">Invalid username or password.</div>
+        }
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

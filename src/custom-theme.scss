@@ -1,0 +1,42 @@
+
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$orange-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // NOTE: We intentionally do NOT force an opaque background here so that
+  // embedding the app inside a transparent host (for example a CEF window)
+  // can show through. If you need an opaque background in a browser build,
+  // override this in the host environment or remove the transparent rule.
+  background-color: transparent;
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+}
+
+
+mat-card {
+	background-color: rgba(255, 255, 255, 1) !important;
+	box-shadow: none !important; /* remove elevation so underlying content shows through cleanly */
+}

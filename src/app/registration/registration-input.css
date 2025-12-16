@@ -1,0 +1,12 @@
+.registration-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1rem;
+	align-items: center;
+}
+
+.error-message {
+  color: #d32f2f; /* Material red tone */
+  margin: 8px 0;
+  font-size: 14px;
+}
