@@ -1,5 +1,5 @@
 import { Component, NgZone, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +13,7 @@ declare const squirrel: any;
 @Component({
     selector: 'login-page',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+    imports: [FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
     templateUrl: './login-page.html',
     styleUrls: ['./login-page.css']
 })

@@ -1,5 +1,5 @@
 import { Component, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -10,7 +10,7 @@ declare const squirrel: any;
 @Component({
   selector: 'app-character-creator',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [MatButtonModule, MatIconModule, MatCardModule],
   templateUrl: './character-creator.html',
   styleUrls: ['./character-creator.css']
 })
