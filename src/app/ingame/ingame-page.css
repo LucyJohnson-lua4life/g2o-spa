@@ -1,61 +1,59 @@
-html, body, .login-container {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
 
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
+/* Ingame page styles */
+.ingame-container {
+  position: relative;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
-.login-card {
-  width: 100%;
-  max-width: 40%;
-  margin: 0;
-  padding: 2rem 1.5rem;
-  background-color: rgba(248, 246, 240, 1) !important;
-  box-shadow: none !important;
-  box-sizing: border-box;
-}
-
-.full-width {
-  width: 100%;
-}
-.button-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-}
-.or-label {
-  align-self: center;
-  margin: 0 1rem;
-  font-weight: bold;
-  color: #888;
-  letter-spacing: 0.1em;
-}
-
-.login-heading {
-  width: 100%;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  letter-spacing: 0.05em;
-  color: #3e2723;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+/* Wrapper fixed at bottom center */
+.talk-button-wrapper {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10vh;
+  z-index: 1000;
   display: flex;
   justify-content: center;
+  pointer-events: auto;
 }
 
-.error-message {
-  color: #f44336;
-  margin-top: 1rem;
-  text-align: center;
+/* Ensure the element is actually removed from layout when using [hidden]
+   CSS rules like `.talk-button-wrapper { display: flex }` can override the
+   browser's default [hidden] UA rule. Make the attribute selector more
+   specific and use !important so [hidden] works reliably. */
+.talk-button-wrapper[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.talk-button {
+  /* Larger, whitish translucent style to match login theme */
+  border-radius: 32px;
+  padding: 20px 48px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.8);
+  color: #3b2f2a; /* slightly dark brown to match theme */
+  border: 1px solid rgba(255,255,255,0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 160ms ease;
+}
+.talk-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+}
+.talk-button:active { transform: translateY(0); box-shadow: 0 6px 14px rgba(0,0,0,0.10); }
+
+/* Slight fade-in animation when displayed */
+.talk-button-wrapper[ng-reflect-ng-if="true"] .talk-button,
+.talk-button-wrapper .talk-button {
+  opacity: 0.8;
 }

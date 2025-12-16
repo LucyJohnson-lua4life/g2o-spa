@@ -1,3 +1,9 @@
 <div class="ingame-container">
+	<!-- Main ingame content goes here -->
+
+	<!-- Talk button: centered at bottom like RPG dialog prompt. Visible when showTalkButton signal is true. -->
+	<div class="talk-button-wrapper" [hidden]="!showTalkButton()">
+		<button mat-raised-button color="primary" class="talk-button" (click)="onTalkClick()">Talk</button>
+	</div>
 
 </div>
